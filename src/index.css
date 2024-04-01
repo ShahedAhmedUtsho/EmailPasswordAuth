@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body{
+  background-color: #212121;
+  min-height: 100vh;
+}
+form{
+  border: 2px solid black;
+  max-width: 400px;
+  border-radius: 15px;
+  margin:15px auto;
+  padding: 20px;
+  background: #ffffff78;
+}
+input:not([type =checkbox]){
+  border: 1px solid black;
+  width: 100%;
+  min-height: 50px;
+  font-size: 20px;
+  padding: 10px;
+
+}
+button{
+  color: #ffffff;
+  padding: 0.6em 1.2em;
+  background: #0f4dc9;
+  transition: all 0.1s linear;
+}
+button:hover{
+  transform: scale(1.05);
+}
+button:active{
+  transform: scale(0.92);
+}
+
+
+
+.fromHeading{
+  color: #ffffff;
+  max-width: 400px;
+  margin:100px auto 0px auto;
+  /* text-align: center; */
+  font-size: 30px;
+
+
+}
