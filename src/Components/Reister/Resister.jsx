@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import Auth from "../../Firebase/firebase.config";
 import { useState } from "react";
 import { IoEyeSharp } from "react-icons/io5";
@@ -21,6 +21,7 @@ const Resister = () => {
         const email = e.target.email.value ;
         const password = e.target.password.value ;
         const trams = e.target.trams.checked
+        const fName =e.target.name.value
        
      // reset error 
 
@@ -46,6 +47,9 @@ const Resister = () => {
             console.log(res.user)
             setSuccess('account successfully created')
             sendEmailVerification(res.user)
+            updateProfile(res.user,{
+                displayName:fName,
+            }).then(console.log('successfully update')).catch()
             .then(
                 alert('check your email to verify')
             )
@@ -76,7 +80,9 @@ const Resister = () => {
                 }
             <h2 className="fromHeading"> Resister</h2>
             <form className=" *:my-4" onSubmit={handleResister}>
+            <input type="text" name="name" required placeholder="name" ></input><br />
                 <input type="email" name="email" required placeholder="enter your email" ></input><br />
+               
 
 
                 <div className="relative  ">
