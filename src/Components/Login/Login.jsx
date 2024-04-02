@@ -1,11 +1,19 @@
-import { useRef, useState } from "react";
+import {  useContext, useRef, useState } from "react";
 
 import { IoEyeSharp } from "react-icons/io5";
 import { BsFillEyeSlashFill } from "react-icons/bs";
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail} from "firebase/auth";
 import Auth from "../../Firebase/firebase.config";
+import { AuthContext } from "../../Provider/Provider";
+
+
+
 
 const Login = () => {
+
+    const {signInUser} = useContext(AuthContext)
+    
+    
 
 const [loginError,setLoginError] =useState('');
 const [loginSuccess,setLoginSuccess] =useState('')
@@ -29,12 +37,14 @@ const emailRef = useRef(null)
      console.log(email,password)
 
 
-     signInWithEmailAndPassword(Auth,email,password)
+     signInUser(email,password)
      .then(res => {
+        e.target.reset()
         const user = res.user;
         
         if(user.emailVerified){
             console.log(user)
+           
             setLoginSuccess('Successfully Login')
         }else(
             alert('please verify your email')
@@ -69,7 +79,12 @@ const emailRef = useRef(null)
 
 
 sendPasswordResetEmail(Auth,email)
-    .then( alert('check your email'))
+    .then(
+       
+        console.log('check your email to verify')
+    
+    )
+       
     .catch(err =>{setLoginError(err.message)})
     
 

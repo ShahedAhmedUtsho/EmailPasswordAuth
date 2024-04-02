@@ -1,16 +1,24 @@
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import  { AuthContext } from "../../Provider/Provider";
 
 const Navbar = () => {
-  
+  const {user,logOut,name} = useContext(AuthContext)
+
+
   const links = <>
     <li className="mx-2"> <NavLink to='/'>Home</NavLink></li>
     <li className="mx-2">  <NavLink to='/Login'>Log in</NavLink></li>
     <li className="mx-2">  <NavLink to='/resister'>Resister</NavLink></li>
-        
- 
-
-
+    <li className="mx-2">  <NavLink to='/order'>Orders</NavLink></li>
   </>
+const [logHave,setLogHave] = useState(false)
+  const logOutToggle = ()=> {
+    
+    setLogHave(!logHave)
+
+
+  }
     return (
         <div>
             <div className="navbar bg-[#b9c3ffbf]">
@@ -33,7 +41,17 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Button</a>
+   { 
+    user ? <div className=" relative">
+      <p onClick={logOutToggle}>{user.displayName || name}</p>
+      <div onClick={() => { logOut(); logOutToggle(); }} className={`w-32 -right-2 min-h-12 absolute top-11 ${!logHave ? "hidden" :"flex"}   justify-center items-center  bg-white`}>
+        <div className="text-medium underline hover:text-[#8b8b8b]">Log Out</div>
+
+      </div>
+    </div>
+    :
+    <div> <a className="btn">Button</a></div>
+   }
   </div>
 </div>
             

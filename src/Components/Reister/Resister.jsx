@@ -1,13 +1,18 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import Auth from "../../Firebase/firebase.config";
-import { useState } from "react";
+import {  sendEmailVerification, updateProfile } from "firebase/auth";
+
+import { useContext, useState } from "react";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsFillEyeSlashFill } from "react-icons/bs";
+import { AuthContext } from "../../Provider/Provider";
+import { useNavigate } from "react-router-dom";
 
 const Resister = () => {
     const [error ,setError] = useState('');
     const [success,setSuccess] =useState('');
     const [showPass,setShowPass] =useState(false);
+
+    const {createUser,setName} = useContext(AuthContext)
+    const navigate =useNavigate()
 
 
     const handleShowPass =()=>{
@@ -17,6 +22,7 @@ const Resister = () => {
     }
 
     const handleResister = e =>{
+        
         e.preventDefault();
         const email = e.target.email.value ;
         const password = e.target.password.value ;
@@ -41,9 +47,13 @@ const Resister = () => {
 
 
 
-        createUserWithEmailAndPassword(Auth,email,password)
-        .then(res =>{
 
+
+
+
+        createUser(email,password)
+        .then(res =>{
+setName(fName)
             console.log(res.user)
             setSuccess('account successfully created')
             sendEmailVerification(res.user)
@@ -51,8 +61,9 @@ const Resister = () => {
                 displayName:fName,
             }).then(console.log('successfully update')).catch()
             .then(
-                alert('check your email to verify')
+                console.log('check your email to verify')
             )
+            navigate('/')
         })
      .catch( error => {
         const errorMessage = error.message ;
